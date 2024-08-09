@@ -1,0 +1,13 @@
+<!DOCTYPE html> <html> <head> <title>函数题解器</title> <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> </head> <body> <h1>函数题解器</h1> <label for="functionInput">输入函数：</label> <input type="text" id="functionInput"> <button onclick="plotFunction()">Plot</button> <div id="plot"></div> <script> function plotFunction() { var functionInput = document.getElementById('functionInput').value; var xValues = []; var yValues = []; for (var i = -10; i <= 10; i++) { xValues.push(i); yValues.push(eval(functionInput.replace(/x/g, i))); } var trace = { x: xValues, y: yValues, type: 'scatter' }; var layout = { title: 'Function Plot', xaxis: { title: 'x' }, yaxis: { title: 'y' } }; var data = [trace]; Plotly.newPlot('plot', data, layout); } </script> </body> </html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

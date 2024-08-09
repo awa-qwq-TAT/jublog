@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<audio id="myAudio" loop>
+  <source src="好运来.mp3" type="audio/mpeg">
+  你的浏览器不支持audio元素。
+</audio>
+
+<canvas id="textCanvas" width="8000" height="4000" style="position: absolute; z-index: 1;">
+你的浏览器不支持canvas元素。
+</canvas>
+
+<canvas id="scratchCanvas" width="8000" height="4000" style="position: absolute; z-index: 2;">
+你的浏览器不支持canvas元素。
+</canvas>
+
+<script>
+window.onload = function() {
+  document.getElementById("myAudio").play();
+
+  var textCanvas = document.getElementById("textCanvas");
+  var textCtx = textCanvas.getContext("2d");
+
+  // 奖品数组
+  var prizes = ["1号奖品", "2号奖品", "3号奖品", "4号奖品", "5号奖品"];
+
+  // 随机选择一个奖品
+  var prize = prizes[Math.floor(Math.random() * prizes.length)];
+
+  // 添加奖品文字
+  textCtx.font = "600px Arial";
+  textCtx.fillText(prize,100,1000);
+
+  var scratchCanvas = document.getElementById("scratchCanvas");
+  var scratchCtx = scratchCanvas.getContext("2d");
+
+  // 创建渐变
+  var grd = scratchCtx.createLinearGradient(0, 0, 2000, 0);
+  grd.addColorStop(0, "gray");
+  grd.addColorStop(1, "gray");
+
+  // 填充渐变
+  scratchCtx.fillStyle = grd;
+  scratchCtx.fillRect(100, 100, 3000, 1200);
+
+  var isDown = false;
+
+  scratchCanvas.onmousedown = function() {
+    isDown = true;
+  }
+
+  scratchCanvas.onmouseup = function() {
+    isDown = false;
+  }
+
+  scratchCanvas.onmousemove = function(event) {
+    if(isDown) {
+      var x = event.x;
+      var y = event.y;
+      x -= scratchCanvas.offsetLeft;
+      y -= scratchCanvas.offsetTop;
+
+      scratchCtx.clearRect(x-200, y-200, 400, 400);
+    }
+  }
+}
+</script>
+
+</body>
+</html>

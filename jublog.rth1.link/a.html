@@ -1,0 +1,73 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>弹窗示例</title>  
+    <style>  
+        body {  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+            overflow: hidden; /* 隐藏除了弹窗以外的其他内容 */  
+        }  
+  
+        #overlay {  
+            position: fixed;  
+            top: 0;  
+            left: 0;  
+            width: 100%;  
+            height: 100%;  
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景，用于遮罩并使其他内容变暗 */  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            z-index: 2; /* 将弹窗图层设为顶层 */  
+        }  
+  
+        #popup {  
+            position: absolute; /* 将弹窗定位在绝对位置 */  
+            top: 50%; /* 将弹窗垂直居中 */  
+            left: 50%; /* 将弹窗水平居中 */  
+            transform: translate(-50%, -50%); /* 将弹窗移动到中心位置 */  
+            width: 300px; /* 你可以根据需要调整弹窗的宽度 */  
+            background-color: #fff; /* 弹窗背景颜色 */  
+            padding: 20px; /* 弹窗内边距 */  
+            border-radius: 10px; /* 圆角 */  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div id="overlay">  
+        <div id="popup">  
+            <h2>用户协议</h2>  
+            <p>若点击同意即代表您同意了我们的<a href="Usertreaty.html"></a>用户协议</p>  
+            <button id="closeBtn">关闭</button> <!-- 添加关闭按钮 -->  
+            <button id="confirmBtn">同意</button> <!-- 保持同意按钮 -->  
+        </div>  
+    </div>  
+    <script>  
+        var hasAgreed = false; // 判断用户是否已经点击过同意按钮的变量，默认为false  
+        var overlay = document.getElementById('overlay'); // 获取弹窗图层元素  
+        var confirmBtn = document.getElementById('confirmBtn'); // 获取同意按钮元素  
+        var closeBtn = document.getElementById('closeBtn'); // 获取关闭按钮元素  
+        var popup = document.getElementById('popup'); // 获取弹窗元素  
+          
+        if (!hasAgreed) { // 当用户首次访问页面时弹出弹窗，并且设置一个变量来跟踪用户是否已经点击过同意按钮  
+            overlay.style.display = 'block'; // 显示弹窗图层  
+            confirmBtn.addEventListener('click', function() { // 为同意按钮添加点击事件监听器  
+                hasAgreed = true; // 将用户是否已经点击过同意按钮的变量设置为true  
+                document.body.style.backgroundColor = '#fff'; // 将背景颜色重新设置为白色  
+                overlay.style.display = 'none'; // 关闭弹窗图层  
+            });  
+        } else { // 如果用户已经点击过同意按钮，则直接关闭弹窗图层  
+            overlay.style.display = 'none'; // 隐藏弹窗图层，这里可以根据需要调整隐藏逻辑，例如可以设置一个定时器在一段时间后隐藏弹窗图层等。  
+        }  
+        closeBtn.addEventListener('click', function() { // 为关闭按钮添加点击事件监听器，关闭当前标签页，注意：某些浏览器可能不允许通过JavaScript关闭非脚本打开的标签页。  
+            window.close(); // 关闭当前标签页，注意：某些浏览器可能不允许通过JavaScript关闭非脚本打开的标签页。  
+        });  
+    </script>  
+</body>  
+</html>

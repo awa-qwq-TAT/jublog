@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>抽学号器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005999;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <input type="number" id="totalStudents" placeholder="请输入学生总数">
+    <input type="number" id="drawnStudents" placeholder="请输入抽取人数">
+    <button onclick="drawNumbers()">抽取学号</button>
+    <p id="result"></p>
+
+    <script>
+        function drawNumbers() {
+            var totalStudents = document.getElementById('totalStudents').value;
+            var drawnStudents = document.getElementById('drawnStudents').value;
+            if (totalStudents && drawnStudents) {
+                var drawnNumbers = [];
+                for (var i = 0; i < drawnStudents; i++) {
+                    var number;
+                    do {
+                        number = Math.floor(Math.random() * totalStudents) + 1;
+                    } while (drawnNumbers.includes(number));
+                    drawnNumbers.push(number);
+                }
+                document.getElementById('result').innerHTML = '抽取的学号是 ' + drawnNumbers.join(', ') + '.';
+            } else {
+                document.getElementById('result').innerHTML = '请先输入学生总数和抽取人数.';
+            }
+        }
+    </script>
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

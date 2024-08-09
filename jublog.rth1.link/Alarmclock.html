@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>闹钟</title>
+</head>
+<body>
+  <div>
+    <label for="alarm-time">闹钟时间：</label>
+    <input type="time" id="alarm-time" name="alarm-time">
+    <button onclick="setAlarm()">设置闹钟</button>
+  </div>
+  <script>
+    function setAlarm() {
+      // 获取闹钟时间
+      const alarmTime = document.getElementById("alarm-time").value;
+      if (!alarmTime) {
+        alert("请选择闹钟时间！");
+        return;
+      }
+ 
+      // 计算闹钟时间距离当前时间的毫秒数
+      const now = new Date();
+      const [hour, minute] = alarmTime.split(":");
+      const alarm = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute);
+      const timeDiff = alarm - now;
+ 
+      // 设置闹钟
+      if (timeDiff > 0) {
+        setTimeout(() => alert("时间到了！"), timeDiff);
+        alert("闹钟设置成功！");
+      } else {
+        alert("请选择未来的时间！");
+      }
+    }
+  </script>
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

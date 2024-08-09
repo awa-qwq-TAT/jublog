@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>扫雷游戏</h2>
+
+<button onclick="generate()">开始游戏</button>
+
+<div id="board"></div>
+
+<script>
+var board = [];
+var size = 10;
+var mineCount = 10;
+var flagCount = 0;
+var revealedCount = 0;
+
+function generate() {
+    board = [];
+    for (var i = 0; i < size; i++) {
+        board[i] = [];
+        for (var j = 0; j < size; j++) {
+            board[i][j] = {mine: false, revealed: false, flagged: false};
+        }
+    }
+    for (var i = 0; i < mineCount; i++) {
+        var x, y;
+        do {
+            x = Math.floor(Math.random() * size);
+            y = Math.floor(Math.random() * size);
+        } while (board[x][y].mine);
+        board[x][y].mine = true;
+    }
+    flagCount = 0;
+    revealedCount = 0;
+    drawBoard();
+}
+
+function drawBoard() {
+    var boardDiv = document.getElementById('board');
+    boardDiv.innerHTML = '';
+    for (var i = 0; i < size; i++) {
+        for (var j = 0; j < size; j++) {
+            var cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.style.width = '20px';
+            cell.style.height = '20px';
+            cell.style.lineHeight = '20px';
+            cell.style.textAlign = 'center';
+            cell.style.border = '1px solid black';
+            cell.style.display = 'inline-block';
+            cell.onclick = (function(i, j) {
+                return function() {
+                    clickCell(i, j);
+                };
+            })(i, j);
+            cell.oncontextmenu = (function(i, j) {
+                return function(e) {
+                    e.preventDefault();
+                    flagCell(i, j);
+                };
+            })(i, j);
+            boardDiv.appendChild(cell);
+        }
+        boardDiv.appendChild(document.createElement('br'));
+    }
+}
+
+function clickCell(i, j) {
+    if (board[i][j].flagged || board[i][j].revealed) return;
+    var cell = document.getElementById('board').children[i*size+j];
+    if (board[i][j].mine) {
+        cell.style.backgroundColor = 'red';
+        cell.innerHTML = '💣';
+        alert('游戏结束，你踩到地雷了！');
+        generate();
+    } else {
+        var count = 0;
+        for (var di = -1; di <= 1; di++) {
+            for (var dj = -1; dj <= 1; dj++) {
+                if (i+di >= 0 && i+di < size && j+dj >= 0 && j+dj < size && board[i+di][j+dj].mine) {
+                    count++;
+                }
+            }
+        }
+        cell.style.backgroundColor = 'lightgray';
+        cell.innerHTML = count > 0 ? count : '';
+        board[i][j].revealed = true;
+        revealedCount++;
+        if (revealedCount == size*size - mineCount) {
+            alert('恭喜你，你赢了！');
+            generate();
+        }
+    }
+}
+
+function flagCell(i, j) {
+    if (board[i][j].revealed) return;
+    var cell = document.getElementById('board').children[i*size+j];
+    if (board[i][j].flagged) {
+        cell.style.backgroundColor = '';
+        cell.innerHTML = '';
+        board[i][j].flagged = false;
+        flagCount--;
+    } else {
+        if (flagCount == mineCount) {
+            alert('你已经标记了所有地雷！');
+            return;
+        }
+        cell.style.backgroundColor = 'blue';
+        cell.innerHTML = '🚩';
+        board[i][j].flagged = true;
+        flagCount++;
+    }
+}
+</script>
+
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

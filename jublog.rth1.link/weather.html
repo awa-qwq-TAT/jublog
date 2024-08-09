@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>江苏苏州天气预报</title>
+</head>
+<body>
+    <h1>江苏苏州天气预报</h1>
+    <div id="weather-info">
+        <p>Loading...</p>
+    </div>
+
+    <script>
+        // 使用JavaScript获取天气数据并更新页面
+        fetch("https://api.openweathermap.org/data/2.5/weather?q=Suzhou,CN&appid=7119f8be594d9d55e730c411353e2e3d")
+            .then(response => response.json())
+            .then(data => {
+                const temperature = data.main.temp;
+                const humidity = data.main.humidity;
+                const description = data.weather[0].description;
+
+                const weatherInfo = document.getElementById("weather-info");
+                weatherInfo.innerHTML = `
+                    <p>温度：${temperature} K</p>
+                    <p>湿度：${humidity} %</p>
+                    <p>天气描述：${description}</p>
+                `;
+            })
+            .catch(error => {
+                console.log("Error:", error);
+                const weatherInfo = document.getElementById("weather-info");
+                weatherInfo.innerHTML = "<p>无法获取天气信息。</p>";
+            });
+    </script>
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

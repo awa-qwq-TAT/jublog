@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.codebox {
+    width: 50%;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    overflow: auto;
+    margin: 20px;
+}
+
+.copy-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.copy-btn:hover {
+    opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="codebox" id="codebox">
+  <h2>代码显示框</h2>
+  <pre>
+  <html>
+  <body>
+
+  <h1>我的第一个标题</h1>
+
+  <p>我的第一个段落。</p>
+
+  </body>
+  </html>
+  </pre>
+  <button class="copy-btn" onclick="copyCode()">复制</button>
+  </div>
+</div>
+
+<script>
+function copyCode() {
+    var range = document.createRange();
+    range.selectNode(document.getElementById('codebox'));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+}
+</script>
+
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio </p>
+  <p>           Thanks for BingAI😊</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

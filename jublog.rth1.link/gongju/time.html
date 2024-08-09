@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>倒计时</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #countdown-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    #startButton, #pauseButton, #resetButton, #continueButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    #startButton {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #pauseButton {
+      background-color: #FFA500;
+      color: white;
+    }
+    #resetButton {
+      background-color: #FF0000;
+      color: white;
+    }
+    #continueButton {
+      background-color: #008CBA;
+      color: white;
+    }
+    #countdownDisplay {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>倒计时</h1>
+  
+  <div id="countdown-wrapper">
+    <input type="number" id="hours" placeholder="时">
+    <input type="number" id="minutes" placeholder="分">
+    <input type="number" id="seconds" placeholder="秒">
+    <button id="startButton" onclick="startCountdown()">开始倒计时</button>
+    <button id="pauseButton" onclick="pauseCountdown()">暂停</button>
+    <button id="resetButton" onclick="resetCountdown()">重置</button>
+    <button id="continueButton" onclick="continueCountdown()">继续</button>
+  </div>
+  <p id="countdownDisplay">剩余时间：</p>
+
+  <script>
+    var interval;
+    var time;
+
+    function startCountdown() {
+      clearInterval(interval); // Clear any existing countdown
+      var hours = parseInt(document.getElementById('hours').value) || 0;
+      var minutes = parseInt(document.getElementById('minutes').value) || 0;
+      var seconds = parseInt(document.getElementById('seconds').value) || 0;
+      time = hours * 3600 + minutes * 60 + seconds;
+
+      interval = setInterval(updateCountdown, 1000);
+    }
+
+    function updateCountdown() {
+      if (time >= 0) {
+        var h = Math.floor(time / 3600);
+        var m = Math.floor((time % 3600) / 60);
+        var s = time % 60;
+        document.getElementById('countdownDisplay').innerText = "剩余时间：" + h + "时 " + m + "分 " + s + "秒";
+        time--;
+      } else {
+        clearInterval(interval);
+        document.title = "时间到！";
+        showNotification();
+      }
+    }
+
+    function pauseCountdown() {
+      clearInterval(interval);
+    }
+
+    function resetCountdown() {
+      clearInterval(interval);
+      document.getElementById('hours').value = '';
+      document.getElementById('minutes').value = '';
+      document.getElementById('seconds').value = '';
+      document.getElementById('countdownDisplay').innerText = "剩余时间：";
+    }
+
+    function continueCountdown() {
+      interval = setInterval(updateCountdown, 1000);
+    }
+
+    function showNotification() {
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission().then(function(permission) {
+          if (permission === "granted") {
+            new Notification("时间到！");
+          }
+        });
+      } else {
+        new Notification("时间到！");
+      }
+    }
+  </script>
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <h2>爬虫1 Results</h2>
+    <ul>
+        {% for result in spider1_results %}
+            <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+    <h2>爬虫2 Results</h2>
+    <ul>
+        {% for result in spider2_results %}
+            <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

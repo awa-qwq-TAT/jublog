@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>北京时间显示器</title>
+<style>
+body {
+  background: #333;
+  color: #fff;
+  text-align: center;  
+}
+
+#clock {
+  font-size: 60px;
+  margin-top: 100px;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#full-screen {
+  background: green;  
+}
+
+#lights-on {
+  background: orange;
+}
+
+#lights-off {
+  background: red;  
+}
+</style>
+</head>
+<body>
+
+<div id="clock"></div>
+
+<button id="full-screen">全屏</button>
+<button id="lights-on">开灯</button> 
+<button id="lights-off">关灯</button>
+
+<script>
+function showTime() {
+  var date = new Date();
+  var h = date.getHours(); 
+  var m = date.getMinutes();
+  var s = date.getSeconds();
+  h = (h < 10) ? "0" + h : h;
+  m = (m < 10) ? "0" + m : m;
+  s = (s < 10) ? "0" + s : s;
+  
+  var time = h + ":" + m + ":" + s;
+  document.getElementById("clock").innerText = time;
+  setTimeout(showTime, 1000);
+}
+
+showTime();
+
+var body = document.body;
+
+document.getElementById("full-screen").onclick = function() {
+  body.requestFullscreen();
+}
+
+document.getElementById("lights-on").onclick = function() {
+  body.style.background = "white";
+  body.style.color = "black";  
+}
+
+document.getElementById("lights-off").onclick = function() {
+  body.style.background = "black";
+  body.style.color = "white";
+}
+</script>
+
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

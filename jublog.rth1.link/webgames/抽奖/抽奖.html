@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>抽奖器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005999;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="prizes" placeholder="请输入奖品，用逗号分隔">
+    <button onclick="drawPrize()">开始抽奖</button>
+    <p id="result"></p>
+
+    <script>
+        function drawPrize() {
+            var prizes = document.getElementById('prizes').value.split(',');
+            if (prizes.length > 0) {
+                var drawnPrize = prizes[Math.floor(Math.random() * prizes.length)];
+                document.getElementById('result').innerHTML = '抽取的奖品是 ' + drawnPrize + '.';
+            } else {
+                document.getElementById('result').innerHTML = '请先输入奖品.';
+            }
+        }
+    </script>
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深圳未来几天天气</title>
+</head>
+<body>
+    <h1>深圳未来几天天气</h1>
+    <div id="weatherInfo"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+        // 使用fetch调用OpenWeather API
+        fetch('https://api.openweathermap.org/data/2.5/forecast?q=Shenzhen&appid=27ad33592cabeae09e8602604c5a4eb0&units=metric')
+        .then(response => response.json())
+        .then(data => {
+            // 提取未来几天的天气信息
+            const forecast = data.list;
+            const weatherInfo = document.getElementById('weatherInfo');
+            let html = '';
+
+            // 获取未来几天的日期
+            for (let i = 0; i < forecast.length; i += 8) { // 每天有8个预报，所以每隔8个取一个
+                const date = moment(forecast[i].dt_txt).format('YYYY-MM-DD');
+                const description = forecast[i].weather[0].description;
+                const maxTemperature = forecast[i].main.temp_max;
+                const minTemperature = forecast[i].main.temp_min;
+
+                html += `<p>${date}：${description}，最高气温：${maxTemperature}°C，最低气温：${minTemperature}°C</p>`;
+            }
+
+            // 显示天气信息
+            weatherInfo.innerHTML = html;
+        })
+        .catch(error => {
+            console.log('Error fetching data:', error);
+        });
+    </script>
+</body>
+遇到问题？<a href="BingAI.html">使用BingAI</a>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

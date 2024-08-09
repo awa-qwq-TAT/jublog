@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Saving Memo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .memo-item {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            position: relative;
+        }
+        .memo-item-number {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .memo-item-text {
+            margin-left: 30px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auto-Saving Memo</h1>
+    <div id="memoContainer">
+        <div class="memo-item">
+            <span class="memo-item-number">1. </span>
+            <div class="memo-item-text" contenteditable="true"></div>
+        </div>
+    </div>
+    <button id="addItemBtn">Add Item</button>
+
+    <script>
+        const memoContainer = document.getElementById('memoContainer');
+        const addItemBtn = document.getElementById('addItemBtn');
+        let itemNumber = 1;
+
+        // Check if there's a saved memo in local storage
+        if (localStorage.getItem('memoItems')) {
+            memoContainer.innerHTML = localStorage.getItem('memoItems');
+        }
+
+        // Auto-save memo items on input
+        memoContainer.addEventListener('input', function() {
+            localStorage.setItem('memoItems', memoContainer.innerHTML);
+        });
+
+        // Add new memo item on button click
+        addItemBtn.addEventListener('click', function() {
+            itemNumber++;
+            const newMemoItem = document.createElement('div');
+            newMemoItem.classList.add('memo-item');
+            newMemoItem.innerHTML = `
+                <span class="memo-item-number">${itemNumber}. </span>
+                <div class="memo-item-text" contenteditable="true"></div>
+            `;
+            memoContainer.appendChild(newMemoItem);
+            newMemoItem.querySelector('.memo-item-text').focus();
+        });
+
+        // Prevent deleting and moving the item number
+        memoContainer.addEventListener('input', function(event) {
+            const target = event.target;
+            if (target.classList.contains('memo-item-number')) {
+                target.parentElement.querySelector('.memo-item-text').focus();
+            }
+        });
+    </script>
+</body>
+</html>
+<div class="bottom-text">
+  <p>    Copyright © 2022-2024 UEStudio</p>
+</div>
+
+<style>
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+</style>
